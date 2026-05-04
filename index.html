@@ -45,7 +45,12 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e
 <div id="app" style="display:none;">
 
 <h1>Álbum Copa 2026</h1>
-
+<div class="topBar">
+  <button onclick="filtrar('todas')">Todas</button>
+  <button onclick="filtrar('faltando')">Faltando</button>
+  <button onclick="filtrar('coletadas')">Coletadas</button>
+  <button onclick="filtrar('repetidas')">Repetidas</button>
+</div>
 <div class="flash" id="flash"></div>
 
 <div class="stats">
@@ -82,8 +87,11 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e
 </div>
 </div>
 </div>
-
 <script>
+let filtroAtual = "todas";function filtrar(tipo){
+  filtroAtual = tipo;
+  render();
+}
 
 let figurinhas=[];
 ["00","1","2","3","4","5","6","7","8"].forEach(n=>{
