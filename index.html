@@ -26,6 +26,8 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e
 .topBar{display:flex;justify-content:center;gap:10px;margin-bottom:10px}
 #bar{transition:width 0.3s;}
 </style>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1b1464">
 </head>
 
 <body>
@@ -269,5 +271,12 @@ function updateHomeProg(){
 </script>
 
 </div>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+    .then(() => console.log("SW funcionando"))
+    .catch(err => console.log("Erro:", err));
+}
+</script>
 </body>
 </html>
