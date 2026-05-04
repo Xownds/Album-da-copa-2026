@@ -130,10 +130,10 @@ let timer=null;
 function render(){
  document.querySelectorAll('.grid').forEach(e=>e.innerHTML="");
 
- let col=figurinhas.filter(f=>f.qtd>0).length;
- let rep=figurinhas.reduce((a,f)=>a+Math.max(0,f.qtd-1),0);
- let falt=figurinhas.length-col;
- let prog=Math.round((col/figurinhas.length)*100);
+let col=figurinhas.filter(f=>f.qtd>0).length;
+let rep=figurinhas.reduce((a,f)=>a+Math.max(0,f.qtd-1),0);
+let falt=figurinhas.length-col;
+let prog=Math.round((col/figurinhas.length)*100);
 
  colEl.innerText=col;
  faltEl.innerText=falt;
@@ -163,6 +163,9 @@ function render(){
  }
 
  figurinhas.forEach(f=>{
+   if(filtroAtual === "faltando" && f.qtd > 0) return;
+ if(filtroAtual === "coletadas" && f.qtd === 0) return;
+ if(filtroAtual === "repetidas" && f.qtd <= 1) return;
   let d=document.createElement("div");
   d.className="card";
   if(f.qtd==1)d.classList.add("done");
