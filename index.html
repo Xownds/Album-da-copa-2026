@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Álbum Copa 2026</title>
+<style>
+body{font-family:Arial;background:#1b1464;color:white;margin:0;padding:10px}
+h1{text-align:center}
+button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e;color:white}
+.stats{display:flex;justify-content:space-around;margin-bottom:10px;text-align:center}
+.section{margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.card{background:#888;border-radius:10px;padding:14px;text-align:center;position:relative}
+.done{background:#22c55e}
+.repeat{background:orange}
+.repBadge{position:absolute;bottom:4px;right:6px;font-size:11px}
+.flash{position:fixed;top:0;left:0;width:100%;height:100%;background:white;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#1b1464;display:none;flex-direction:column;align-items:center;justify-content:center}
+.bigcard{background:#22c55e;padding:50px;font-size:42px;margin-bottom:20px;border-radius:10px}
+.controls{display:flex;gap:20px;font-size:30px}
+.btn{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.minus{background:red}
+.plus{background:green}
+.backBtn{position:absolute;top:20px;left:20px;background:#444;padding:10px 15px;border-radius:10px}
+.topBar{display:flex;justify-content:center;gap:10px;margin-bottom:10px}
+#bar{transition:width 0.3s;}
+</style>
+</head>
+
+<body>
+
+<div id="home" style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100vh;text-align:center;gap:15px">
+  <h1 style="font-size:40px">🏆 Álbum Copa 2026</h1>
+  <div id="homeProg" style="font-size:20px;opacity:0.8">0% completo</div>
+  <div style="width:200px;height:12px;background:#333;border-radius:10px;overflow:hidden;margin-top:8px">
+    <div id="bar" style="height:100%;width:0%"></div>
+  </div>
+  <button onclick="continuar()">Continuar</button>
+  <button onclick="novoAlbum()" style="background:#ef4444">Novo Álbum</button>
+</div>
+
+<div id="app" style="display:none;">
+
+<h1>Álbum Copa 2026</h1>
+
+<div class="flash" id="flash"></div>
+
+<div class="stats">
+<div><b id="col">0</b><br>Coletadas</div>
+<div><b id="falt">0</b><br>Faltando</div>
+<div><b id="rep">0</b><br>Repetidas</div>
+<div>
+  <b id="prog">0%</b><br>Progresso
+  <div id="msgProg" style="font-size:11px;opacity:0.8"></div>
+</div>
+</div>
+
+<div class="section">
+<h2>🏆 Página Inicial (FWC)</h2>
+<div class="grid" id="FWC_START"></div>
+</div>
+
+<div id="grupos"></div>
+
+<div class="section">
+<h2>🏆 FIFA World Cup History (FWC)</h2>
+<div class="grid" id="FWC_END"></div>
+</div>
+
+<div id="modal" class="modal">
+<button class="backBtn" onclick="closeModal()">⬅ Voltar</button>
+<div class="bigcard" id="modalTitle"></div>
+<div style="background:#333;padding:20px;border-radius:20px;text-align:center;">
+<div>Quantidade de Repetidas</div>
+<div class="controls">
+<div class="btn minus" onclick="change(-1)">-</div>
+<div id="qtd">0</div>
+<div class="btn plus" onclick="change(1)">+</div>
+</div>
+</div>
+</div>
+
+<script>
+
+let figurinhas=[];
+["00","1","2","3","4","5","6","7","8"].forEach(n=>{
+ figurinhas.push({id:"FWC"+n,grupo:"FWC_START",qtd:0});
+});
+
+const gruposData = [
+{grupo:"Grupo A",times:[["MEX","🇲🇽 México"],["RSA","🇿🇦 África do Sul"],["KOR","🇰🇷 Coreia do Sul"],["CZE","🇨🇿 Rep. Tcheca"]]},
+{grupo:"Grupo B",times:[["CAN","🇨🇦 Canadá"],["BIH","🇧🇦 Bósnia"],["QAT","🇶🇦 Catar"],["SUI","🇨🇭 Suíça"]]},
+{grupo:"Grupo C",times:[["BRA","🇧🇷 Brasil"],["MAR","🇲🇦 Marrocos"],["HAI","🇭🇹 Haiti"],["SCO","🏴 Escócia"]]},
+{grupo:"Grupo D",times:[["USA","🇺🇸 EUA"],["PAR","🇵🇾 Paraguai"],["AUS","🇦🇺 Austrália"],["TUR","🇹🇷 Turquia"]]},
+{grupo:"Grupo E",times:[["GER","🇩🇪 Alemanha"],["CUW","🇨🇼 Curaçao"],["CIV","🇨🇮 Costa do Marfim"],["ECU","🇪🇨 Equador"]]},
+{grupo:"Grupo F",times:[["NED","🇳🇱 Holanda"],["JPN","🇯🇵 Japão"],["SWE","🇸🇪 Suécia"],["TUN","🇹🇳 Tunísia"]]},
+{grupo:"Grupo G",times:[["BEL","🇧🇪 Bélgica"],["EGY","🇪🇬 Egito"],["IRN","🇮🇷 Irã"],["NZL","🇳🇿 Nova Zelândia"]]},
+{grupo:"Grupo H",times:[["ESP","🇪🇸 Espanha"],["CPV","🇨🇻 Cabo Verde"],["KSA","🇸🇦 Arábia Saudita"],["URU","🇺🇾 Uruguai"]]},
+{grupo:"Grupo I",times:[["FRA","🇫🇷 França"],["SEN","🇸🇳 Senegal"],["IRQ","🇮🇶 Iraque"],["NOR","🇳🇴 Noruega"]]},
+{grupo:"Grupo J",times:[["ARG","🇦🇷 Argentina"],["ALG","🇩🇿 Argélia"],["AUT","🇦🇹 Áustria"],["JOR","🇯🇴 Jordânia"]]},
+{grupo:"Grupo K",times:[["POR","🇵🇹 Portugal"],["COD","🇨🇩 Congo"],["UZB","🇺🇿 Uzbequistão"],["COL","🇨🇴 Colômbia"]]},
+{grupo:"Grupo L",times:[["ENG","🇬🇧 Inglaterra"],["CRO","🇭🇷 Croácia"],["GHA","🇬🇭 Gana"],["PAN","🇵🇦 Panamá"]]}
+];
+
+let gruposDiv=document.getElementById("grupos");
+
+gruposData.forEach(g=>{
+ let sec=document.createElement("div");
+ sec.className="section";
+ sec.innerHTML="<h2>"+g.grupo+"</h2>";
+ g.times.forEach(t=>{
+  sec.innerHTML += "<h3>"+t[1]+"</h3><div class='grid' id='"+t[0]+"'></div>";
+  for(let i=1;i<=20;i++){
+    figurinhas.push({id:t[0]+i,grupo:t[0],qtd:0});
+  }
+ });
+ gruposDiv.appendChild(sec);
+});
+
+for(let i=9;i<=19;i++){
+ figurinhas.push({id:"FWC"+i,grupo:"FWC_END",qtd:0});
+}
+
+let current=null;
+let timer=null;
+
+function render(){
+ document.querySelectorAll('.grid').forEach(e=>e.innerHTML="");
+
+ let col=figurinhas.filter(f=>f.qtd>0).length;
+ let rep=figurinhas.reduce((a,f)=>a+Math.max(0,f.qtd-1),0);
+ let falt=figurinhas.length-col;
+ let prog=Math.round((col/figurinhas.length)*100);
+
+ colEl.innerText=col;
+ faltEl.innerText=falt;
+ repEl.innerText=rep;
+
+ progEl.innerText = `${prog}% (${col}/${figurinhas.length})`;
+
+ if(prog < 40){
+  progEl.style.color = "#ef4444";
+ }else if(prog < 80){
+  progEl.style.color = "#facc15";
+ }else{
+  progEl.style.color = "#22c55e";
+ }
+
+ if(prog < 20){
+  msgProg.innerText = "Começando...";
+ }else if(prog < 50){
+  msgProg.innerText = "Tá evoluindo 🔥";
+ }else if(prog < 80){
+  msgProg.innerText = "Quase na metade!";
+ }else if(prog < 100){
+  msgProg.innerText = "Quase completo 😈";
+ }else{
+  msgProg.innerText = "ÁLBUM COMPLETO 🏆";
+  document.body.style.background = "#065f46";
+ }
+
+ figurinhas.forEach(f=>{
+  let d=document.createElement("div");
+  d.className="card";
+  if(f.qtd==1)d.classList.add("done");
+  if(f.qtd>=2)d.classList.add("repeat");
+
+  d.innerHTML = `<div>${f.id}</div><div style="font-size:10px;opacity:0.7">${f.qtd>0?"✔":"—"}</div>`;
+
+  if(f.qtd>1){
+    let repb=document.createElement("div");
+    repb.className="repBadge";
+    repb.innerText="x"+(f.qtd-1);
+    d.appendChild(repb);
+  }
+
+  d.addEventListener("touchstart",()=>{timer=setTimeout(()=>openModal(f),1200);});
+  d.addEventListener("touchend",()=>clearTimeout(timer));
+
+  d.onclick=()=>{
+    f.qtd++;
+    if(navigator.vibrate) navigator.vibrate(f.qtd>1?[50,50,50]:30);
+    save();
+    render();
+    updateHomeProg();
+  };
+
+  document.getElementById(f.grupo).appendChild(d);
+ });
+}
+
+function openModal(f){
+ current=f;
+ modalTitle.innerText=f.id;
+ qtd.innerText=f.qtd;
+ flash.style.opacity="1";
+ setTimeout(()=>flash.style.opacity="0",120);
+ modal.style.display="flex";
+}
+
+function closeModal(){
+ modal.style.display="none";
+ save();
+ render();
+ updateHomeProg();
+}
+
+function change(v){
+ current.qtd=Math.max(0,current.qtd+v);
+ qtd.innerText=current.qtd;
+ save();
+ render();
+ updateHomeProg();
+}
+
+function save(){
+ localStorage.setItem("album_master",JSON.stringify(figurinhas));
+}
+
+function load(){
+ let d=localStorage.getItem("album_master");
+ if(d){
+  JSON.parse(d).forEach(x=>{
+    let f=figurinhas.find(y=>y.id===x.id);
+    if(f)f.qtd=x.qtd;
+  });
+ }
+}
+
+let colEl=document.getElementById("col");
+let faltEl=document.getElementById("falt");
+let repEl=document.getElementById("rep");
+let progEl=document.getElementById("prog");
+let msgProg=document.getElementById("msgProg");
+
+load();
+render();
+updateHomeProg();
+
+function continuar(){
+ document.getElementById("home").style.display="none";
+ document.getElementById("app").style.display="block";
+}
+
+function novoAlbum(){
+ if(confirm("Tem certeza? Isso vai apagar seu progresso.")){
+  localStorage.removeItem("album_master");
+  location.reload();
+ }
+}
+
+function updateHomeProg(){
+ let total = figurinhas.length;
+ let col = figurinhas.filter(f=>f.qtd>0).length;
+ let prog = total ? Math.round((col/total)*100) : 0;
+
+ homeProg.innerText = `${prog}% completo (${col}/${total})`;
+
+ let bar=document.getElementById("bar");
+ if(bar){
+  bar.style.width = prog+"%";
+  if(prog<40) bar.style.background="#ef4444";
+  else if(prog<80) bar.style.background="#facc15";
+  else bar.style.background="#22c55e";
+ }
+}
+
+</script>
+
+</div>
+</body>
+</html>
