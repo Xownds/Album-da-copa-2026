@@ -61,6 +61,7 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e
   <button onclick="filtrar('faltando')">Faltando</button>
   <button onclick="filtrar('coletadas')">Coletadas</button>
   <button onclick="filtrar('repetidas')">Repetidas</button>
+    <button onclick="mudarOrdem()">🔤 Ordem</button>
 </div>
 <div class="flash" id="flash"></div>
 
@@ -99,6 +100,7 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e
 </div>
 </div>
 <script>
+  let modoOrdem = "normal";
 let filtroAtual = "todas";function filtrar(tipo){
   filtroAtual = tipo;
   render();
@@ -180,8 +182,12 @@ let prog=Math.round((col/figurinhas.length)*100);
   msgProg.innerText = "ÁLBUM COMPLETO 🏆";
   document.body.style.background = "#065f46";
  }
+let lista = [...figurinhas];
 
- figurinhas.forEach(f=>{
+if(modoOrdem === "alfabetica"){
+  lista.sort((a,b)=> a.id.localeCompare(b.id));
+}
+ lista.forEach(f=>{
    if(filtroAtual === "faltando" && f.qtd > 0) return;
  if(filtroAtual === "coletadas" && f.qtd === 0) return;
  if(filtroAtual === "repetidas" && f.qtd <= 1) return;
