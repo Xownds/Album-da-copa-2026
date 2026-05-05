@@ -269,7 +269,31 @@ let prog=Math.round((col/figurinhas.length)*100);
   msgProg.innerText = "ÁLBUM COMPLETO 🏆";
   document.body.style.background = "#065f46";
  }
- lista.forEach(f=>{
+ if (modoOrdem === "alfabetica"){
+
+  let container = document.getElementById("grupos");
+  container.innerHTML = "<h2>🔤 Ordem Alfabética</h2><div class='grid' id='alfabeto'></div>";
+
+  lista.forEach(f=>{
+    let d=document.createElement("div");
+    d.className="card";
+
+    if(f.qtd==1)d.classList.add("done");
+    if(f.qtd>=2)d.classList.add("repeat");
+
+    d.innerHTML = `<div>${f.nome || f.id}</div>`;
+
+    d.onclick=()=>{
+      f.qtd++;
+      save();
+      render();
+    };
+
+    document.getElementById("alfabeto").appendChild(d);
+  });
+
+  return;
+ }
    if(filtroAtual === "faltando" && f.qtd > 0) return;
  if(filtroAtual === "coletadas" && f.qtd === 0) return;
  if(filtroAtual === "repetidas" && f.qtd <= 1) return;
