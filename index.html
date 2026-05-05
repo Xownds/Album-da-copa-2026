@@ -270,12 +270,7 @@ function render(){
       d.innerHTML = `<div>${f.nome || f.id}</div>`;
 
       d.onclick=()=>{
-        f.qtd++;
-        save();
-        render();
-        updateHomeProg();
-      };
-
+        f.qtd++
       document.getElementById("alfabeto").appendChild(d);
     });
 
