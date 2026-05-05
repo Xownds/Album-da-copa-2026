@@ -220,18 +220,11 @@ gruposData.forEach(g=>{
 });
 
 for(let i=9;i<=19;i++){
- figurinhas.push({id:"FWC"+i,grupo:"FWC_END",qtd:0});
-}
-
-let current=null;
-let timer=null;
-
-function render(){
+ function render(){
   document.querySelectorAll('.grid').forEach(e=>e.innerHTML="");
 
   let lista = [...figurinhas];
 
-  // ORDENAÇÃO
   if (modoOrdem === "alfabetica"){
     lista.sort((a,b)=>{
       return (a.nome||"").localeCompare(b.nome||"", 'pt-BR');
@@ -251,12 +244,10 @@ function render(){
 
   // 🔤 MODO ALFABÉTICO
   if (modoOrdem === "alfabetica"){
-
     let container = document.getElementById("grupos");
     container.innerHTML = "<h2>🔤 Ordem Alfabética</h2><div class='grid' id='alfabeto'></div>";
 
     lista.forEach(f=>{
-
       if(filtroAtual==="faltando" && f.qtd>0) return;
       if(filtroAtual==="coletadas" && f.qtd===0) return;
       if(filtroAtual==="repetidas" && f.qtd<=1) return;
@@ -270,16 +261,20 @@ function render(){
       d.innerHTML = `<div>${f.nome || f.id}</div>`;
 
       d.onclick=()=>{
-        f.qtd++
+        f.qtd++;
+        save();
+        render();
+        updateHomeProg();
+      };
+
       document.getElementById("alfabeto").appendChild(d);
     });
 
     return;
   }
 
-  // 🧩 MODO NORMAL (com grupos)
+  // 🧩 MODO NORMAL
   lista.forEach(f=>{
-
     if(filtroAtual==="faltando" && f.qtd>0) return;
     if(filtroAtual==="coletadas" && f.qtd===0) return;
     if(filtroAtual==="repetidas" && f.qtd<=1) return;
@@ -305,8 +300,14 @@ function render(){
     d.onclick=()=>{
       f.qtd++;
       if(navigator.vibrate) navigator.vibrate(f.qtd>1?[50,50,50]:30);
-}):
-  }
+      save();
+      render();
+      updateHomeProg();
+    };
+
+    document.getElementById(f.grupo).appendChild(d);
+  });
+ }
 
 function openModal(f){
  current=f;
