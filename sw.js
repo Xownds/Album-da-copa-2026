@@ -1,4 +1,4 @@
-const CACHE_NAME = "album-cache-v1";
+const CACHE_NAME = "album-v8";
 const urlsToCache = [
   "./",
   "./index.html"
