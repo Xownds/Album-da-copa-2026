@@ -119,18 +119,89 @@ let figurinhas=[];
 });
 
 const gruposData = [
-{grupo:"Grupo A",times:[["MEX","🇲🇽 México"],["RSA","🇿🇦 África do Sul"],["KOR","🇰🇷 Coreia do Sul"],["CZE","🇨🇿 Rep. Tcheca"]]},
-{grupo:"Grupo B",times:[["CAN","🇨🇦 Canadá"],["BIH","🇧🇦 Bósnia"],["QAT","🇶🇦 Catar"],["SUI","🇨🇭 Suíça"]]},
-{grupo:"Grupo C",times:[["BRA","🇧🇷 Brasil"],["MAR","🇲🇦 Marrocos"],["HAI","🇭🇹 Haiti"],["SCO","🏴 Escócia"]]},
-{grupo:"Grupo D",times:[["USA","🇺🇸 EUA"],["PAR","🇵🇾 Paraguai"],["AUS","🇦🇺 Austrália"],["TUR","🇹🇷 Turquia"]]},
-{grupo:"Grupo E",times:[["GER","🇩🇪 Alemanha"],["CUW","🇨🇼 Curaçao"],["CIV","🇨🇮 Costa do Marfim"],["ECU","🇪🇨 Equador"]]},
-{grupo:"Grupo F",times:[["NED","🇳🇱 Holanda"],["JPN","🇯🇵 Japão"],["SWE","🇸🇪 Suécia"],["TUN","🇹🇳 Tunísia"]]},
-{grupo:"Grupo G",times:[["BEL","🇧🇪 Bélgica"],["EGY","🇪🇬 Egito"],["IRN","🇮🇷 Irã"],["NZL","🇳🇿 Nova Zelândia"]]},
-{grupo:"Grupo H",times:[["ESP","🇪🇸 Espanha"],["CPV","🇨🇻 Cabo Verde"],["KSA","🇸🇦 Arábia Saudita"],["URU","🇺🇾 Uruguai"]]},
-{grupo:"Grupo I",times:[["FRA","🇫🇷 França"],["SEN","🇸🇳 Senegal"],["IRQ","🇮🇶 Iraque"],["NOR","🇳🇴 Noruega"]]},
-{grupo:"Grupo J",times:[["ARG","🇦🇷 Argentina"],["ALG","🇩🇿 Argélia"],["AUT","🇦🇹 Áustria"],["JOR","🇯🇴 Jordânia"]]},
-{grupo:"Grupo K",times:[["POR","🇵🇹 Portugal"],["COD","🇨🇩 Congo"],["UZB","🇺🇿 Uzbequistão"],["COL","🇨🇴 Colômbia"]]},
-{grupo:"Grupo L",times:[["ENG","🇬🇧 Inglaterra"],["CRO","🇭🇷 Croácia"],["GHA","🇬🇭 Gana"],["PAN","🇵🇦 Panamá"]]}
+{grupo:"Grupo A",times:[
+["MEX","🇲🇽 México","México"],
+["RSA","🇿🇦 África do Sul","África do Sul"],
+["KOR","🇰🇷 Coreia do Sul","Coreia do Sul"],
+["CZE","🇨🇿 Rep. Tcheca","República Tcheca"]
+]},
+
+{grupo:"Grupo B",times:[
+["CAN","🇨🇦 Canadá","Canadá"],
+["BIH","🇧🇦 Bósnia","Bósnia"],
+["QAT","🇶🇦 Catar","Catar"],
+["SUI","🇨🇭 Suíça","Suíça"]
+]},
+
+{grupo:"Grupo C",times:[
+["BRA","🇧🇷 Brasil","Brasil"],
+["MAR","🇲🇦 Marrocos","Marrocos"],
+["HAI","🇭🇹 Haiti","Haiti"],
+["SCO","🏴 Escócia","Escócia"]
+]},
+
+{grupo:"Grupo D",times:[
+["USA","🇺🇸 EUA","Estados Unidos"],
+["PAR","🇵🇾 Paraguai","Paraguai"],
+["AUS","🇦🇺 Austrália","Austrália"],
+["TUR","🇹🇷 Turquia","Turquia"]
+]},
+
+{grupo:"Grupo E",times:[
+["GER","🇩🇪 Alemanha","Alemanha"],
+["CUW","🇨🇼 Curaçao","Curaçao"],
+["CIV","🇨🇮 Costa do Marfim","Costa do Marfim"],
+["ECU","🇪🇨 Equador","Equador"]
+]},
+
+{grupo:"Grupo F",times:[
+["NED","🇳🇱 Holanda","Holanda"],
+["JPN","🇯🇵 Japão","Japão"],
+["SWE","🇸🇪 Suécia","Suécia"],
+["TUN","🇹🇳 Tunísia","Tunísia"]
+]},
+
+{grupo:"Grupo G",times:[
+["BEL","🇧🇪 Bélgica","Bélgica"],
+["EGY","🇪🇬 Egito","Egito"],
+["IRN","🇮🇷 Irã","Irã"],
+["NZL","🇳🇿 Nova Zelândia","Nova Zelândia"]
+]},
+
+{grupo:"Grupo H",times:[
+["ESP","🇪🇸 Espanha","Espanha"],
+["CPV","🇨🇻 Cabo Verde","Cabo Verde"],
+["KSA","🇸🇦 Arábia Saudita","Arábia Saudita"],
+["URU","🇺🇾 Uruguai","Uruguai"]
+]},
+
+{grupo:"Grupo I",times:[
+["FRA","🇫🇷 França","França"],
+["SEN","🇸🇳 Senegal","Senegal"],
+["IRQ","🇮🇶 Iraque","Iraque"],
+["NOR","🇳🇴 Noruega","Noruega"]
+]},
+
+{grupo:"Grupo J",times:[
+["ARG","🇦🇷 Argentina","Argentina"],
+["ALG","🇩🇿 Argélia","Argélia"],
+["AUT","🇦🇹 Áustria","Áustria"],
+["JOR","🇯🇴 Jordânia","Jordânia"]
+]},
+
+{grupo:"Grupo K",times:[
+["POR","🇵🇹 Portugal","Portugal"],
+["COD","🇨🇩 Congo","Congo"],
+["UZB","🇺🇿 Uzbequistão","Uzbequistão"],
+["COL","🇨🇴 Colômbia","Colômbia"]
+]},
+
+{grupo:"Grupo L",times:[
+["ENG","🇬🇧 Inglaterra","Inglaterra"],
+["CRO","🇭🇷 Croácia","Croácia"],
+["GHA","🇬🇭 Gana","Gana"],
+["PAN","🇵🇦 Panamá","Panamá"]
+]}
 ];
 
 let gruposDiv=document.getElementById("grupos");
@@ -149,8 +220,7 @@ gruposData.forEach(g=>{
 });
 
 for(let i=9;i<=19;i++){
- figurinhas.push({id:"FWC"+i,grupo:"FWC_END",qtd:0});
-}
+ figurinhas.push({id:t[0]+i,grupo:t[0],nome:t[2],qtd:0});
 
 let current=null;
 let timer=null;
@@ -161,8 +231,8 @@ function render(){
 
 if (modoOrdem === "alfabetica"){
   lista.sort((a,b)=>{
-    let nomeA = nomes[a.id] || "";
-    let nomeB = nomes[b.id] || "";
+    let nomeA = a.nome || "";
+    let nomeB = b.nome || "";
     return nomeA.localeCompare(nomeB, 'pt-BR');
   });
 }
@@ -198,11 +268,6 @@ let prog=Math.round((col/figurinhas.length)*100);
   msgProg.innerText = "ÁLBUM COMPLETO 🏆";
   document.body.style.background = "#065f46";
  }
-let lista = [...figurinhas];
-
-if(modoOrdem === "alfabetica"){
-  lista.sort((a,b)=> a.grupo.localeCompare(b.grupo));
-}
  lista.forEach(f=>{
    if(filtroAtual === "faltando" && f.qtd > 0) return;
  if(filtroAtual === "coletadas" && f.qtd === 0) return;
