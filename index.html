@@ -157,6 +157,15 @@ let timer=null;
 
 function render(){
  document.querySelectorAll('.grid').forEach(e=>e.innerHTML="");
+  let lista = [...figurinhas];
+
+if (modoOrdem === "alfabetica"){
+  lista.sort((a,b)=>{
+    let nomeA = nomes[a.id] || "";
+    let nomeB = nomes[b.id] || "";
+    return nomeA.localeCompare(nomeB, 'pt-BR');
+  });
+}
 
 let col=figurinhas.filter(f=>f.qtd>0).length;
 let rep=figurinhas.reduce((a,f)=>a+Math.max(0,f.qtd-1),0);
@@ -192,7 +201,7 @@ let prog=Math.round((col/figurinhas.length)*100);
 let lista = [...figurinhas];
 
 if(modoOrdem === "alfabetica"){
-  lista.sort((a,b)=> a.id.localeCompare(b.id));
+  lista.sort((a,b)=> a.grupo.localeCompare(b.grupo));
 }
  lista.forEach(f=>{
    if(filtroAtual === "faltando" && f.qtd > 0) return;
