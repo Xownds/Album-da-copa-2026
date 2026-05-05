@@ -307,44 +307,44 @@ for(let i=9;i<=19;i++){
 
     document.getElementById(f.grupo).appendChild(d);
   });
- }
+}
 
 function openModal(f){
- current=f;
- modalTitle.innerText=f.id;
- qtd.innerText=f.qtd;
- flash.style.opacity="1";
- setTimeout(()=>flash.style.opacity="0",120);
- modal.style.display="flex";
+  current=f;
+  modalTitle.innerText=f.id;
+  qtd.innerText=f.qtd;
+  flash.style.opacity="1";
+  setTimeout(()=>flash.style.opacity="0",120);
+  modal.style.display="flex";
 }
 
 function closeModal(){
- modal.style.display="none";
- save();
- render();
- updateHomeProg();
+  modal.style.display="none";
+  save();
+  render();
+  updateHomeProg();
 }
 
 function change(v){
- current.qtd=Math.max(0,current.qtd+v);
- qtd.innerText=current.qtd;
- save();
- render();
- updateHomeProg();
+  current.qtd=Math.max(0,current.qtd+v);
+  qtd.innerText=current.qtd;
+  save();
+  render();
+  updateHomeProg();
 }
 
 function save(){
- localStorage.setItem("album_master",JSON.stringify(figurinhas));
+  localStorage.setItem("album_master",JSON.stringify(figurinhas));
 }
 
 function load(){
- let d=localStorage.getItem("album_master");
- if(d){
-  JSON.parse(d).forEach(x=>{
-    let f=figurinhas.find(y=>y.id===x.id);
-    if(f)f.qtd=x.qtd;
-  });
- }
+  let d=localStorage.getItem("album_master");
+  if(d){
+    JSON.parse(d).forEach(x=>{
+      let f=figurinhas.find(y=>y.id===x.id);
+      if(f)f.qtd=x.qtd;
+    });
+  }
 }
 
 let colEl=document.getElementById("col");
@@ -358,42 +358,29 @@ render();
 updateHomeProg();
 
 function continuar(){
- document.getElementById("home").style.display="none";
- document.getElementById("app").style.display="block";
+  document.getElementById("home").style.display="none";
+  document.getElementById("app").style.display="block";
 }
 
 function novoAlbum(){
- if(confirm("Tem certeza? Isso vai apagar seu progresso.")){
-  localStorage.removeItem("album_master");
-  location.reload();
- }
+  if(confirm("Tem certeza? Isso vai apagar seu progresso.")){
+    localStorage.removeItem("album_master");
+    location.reload();
+  }
 }
 
 function updateHomeProg(){
- let total = figurinhas.length;
- let col = figurinhas.filter(f=>f.qtd>0).length;
- let prog = total ? Math.round((col/total)*100) : 0;
+  let total = figurinhas.length;
+  let col = figurinhas.filter(f=>f.qtd>0).length;
+  let prog = total ? Math.round((col/total)*100) : 0;
 
- homeProg.innerText = `${prog}% completo (${col}/${total})`;
+  homeProg.innerText = `${prog}% completo (${col}/${total})`;
 
- let bar=document.getElementById("bar");
- if(bar){
-  bar.style.width = prog+"%";
-  if(prog<40) bar.style.background="#ef4444";
-  else if(prog<80) bar.style.background="#facc15";
-  else bar.style.background="#22c55e";
- }
+  let bar=document.getElementById("bar");
+  if(bar){
+    bar.style.width = prog+"%";
+    if(prog<40) bar.style.background="#ef4444";
+    else if(prog<80) bar.style.background="#facc15";
+    else bar.style.background="#22c55e";
+  }
 }
-
-</script>
-
-</div>
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("SW funcionando"))
-    .catch(err => console.log("Erro:", err));
-}
-</script>
-</body>
-</html>
