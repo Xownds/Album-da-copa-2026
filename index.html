@@ -100,9 +100,16 @@ button{padding:10px;border:none;border-radius:10px;margin:5px;background:#22c55e
 </div>
 </div>
 <script>
-  let modoOrdem = "normal";
-let filtroAtual = "todas";function filtrar(tipo){
+   let modoOrdem = "normal";
+let filtroAtual = "todas";
+
+function filtrar(tipo){
   filtroAtual = tipo;
+  render();
+}
+
+function mudarOrdem(){
+  modoOrdem = modoOrdem === "normal" ? "alfabetica" : "normal";
   render();
 }
 
