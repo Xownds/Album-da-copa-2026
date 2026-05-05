@@ -263,6 +263,52 @@ if (modoOrdem === "alfabetica"){
   return;
 }
 
+// 🧩 MODO NORMAL
+lista.forEach(f=>{
+
+  if(filtroAtual === "faltando" && f.qtd > 0) return;
+  if(filtroAtual === "coletadas" && f.qtd === 0) return;
+  if(filtroAtual === "repetidas" && f.qtd <= 1) return;
+
+  let d=document.createElement("div");
+  d.className="card";
+
+  if(f.qtd==1)d.classList.add("done");
+  if(f.qtd>=2)d.classList.add("repeat");
+
+  d.innerHTML = `<div>${f.id}</div><div style="font-size:10px;opacity:0.7">${f.qtd>0?"✔":"—"}</div>`;
+
+  if(f.qtd>1){
+    let repb=document.createElement("div");
+    repb.className="repBadge";
+    repb.innerText="x"+(f.qtd-1);
+    d.appendChild(repb);
+  }
+
+  d.addEventListener("touchstart",()=>{timer=setTimeout(()=>openModal(f),1200);});
+  d.addEventListener("touchend",()=>clearTimeout(timer));
+
+  d.onclick=()=>{
+    f.qtd++;
+    if(navigator.vibrate) navigator.vibrate(f.qtd>1?[50,50,50]:30);
+    save();
+    render();
+    updateHomeProg();
+  };
+
+  document.getElementById(f.grupo).appendChild(d);
+});
+      save();
+      render();
+      updateHomeProg();
+    };
+
+    document.getElementById("alfabeto").appendChild(d);
+  });
+
+  return;
+}
+
 // 🧩 MODO NORMAL (com grupos)
 lista.forEach(f=>{
 
