@@ -305,14 +305,8 @@ function render(){
     d.onclick=()=>{
       f.qtd++;
       if(navigator.vibrate) navigator.vibrate(f.qtd>1?[50,50,50]:30);
-      save();
-      render();
-      updateHomeProg();
-    };
-
-    document.getElementById(f.grupo).appendChild(d);
-  });
-}
+}):
+  }
 
 function openModal(f){
  current=f;
