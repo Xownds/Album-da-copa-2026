@@ -280,16 +280,26 @@ repb.innerText="x"+(f.qtd-1);
 d.appendChild(repb);
 }
 
-d.addEventListener("touchstart",()=>{timer=setTimeout(()=>openModal(f),1200);});
-d.addEventListener("touchend",()=>clearTimeout(timer));
-
 d.onclick=()=>{
+
+if(f.qtd === 0){
+
 f.qtd++;
-if(navigator.vibrate) navigator.vibrate(f.qtd>1?[50,50,50]:30);
+
+if(navigator.vibrate) navigator.vibrate(30);
+
 save();
 render();
 updateHomeProg();
+
+}else{
+
+openModal(f);
+
+}
+
 };
+
 
 document.getElementById(f.grupo).appendChild(d);
 });
