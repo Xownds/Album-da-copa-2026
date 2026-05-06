@@ -51,7 +51,6 @@ justify-content:center;
   <button onclick="filtrar('faltando')">Faltando</button>  
   <button onclick="filtrar('coletadas')">Coletadas</button>  
   <button onclick="filtrar('repetidas')">Repetidas</button>  
-    <button onclick="mudarOrdem()">🔤 Ordem</button>  
 </div>  
 <div class="flash" id="flash"></div>  <div class="stats">  
 <div><b id="col">0</b><br>Coletadas</div>  
@@ -79,15 +78,9 @@ justify-content:center;
 </div>  
 </div>  
 </div>  
-<script>  
-   let modoOrdem = "normal";  
+<script> 
 let filtroAtual = "todas";  function filtrar(tipo){
 filtroAtual = tipo;
-render();
-}
-
-function mudarOrdem(){
-modoOrdem = modoOrdem === "normal" ? "alfabetica" : "normal";
 render();
 }
 
@@ -198,7 +191,8 @@ gruposDiv.appendChild(sec);
 });
 
 for(let i=9;i<=19;i++){
-figurinhas.push({id:t[0]+i,grupo:t[0],nome:t[2],qtd:0});
+figurinhas.push({id:"FWC"+i,grupo:"FWC_END",qtd:0});
+}
 
 let current=null;
 let timer=null;
@@ -206,15 +200,6 @@ let timer=null;
 function render(){
 document.querySelectorAll('.grid').forEach(e=>e.innerHTML="");
 let lista = [...figurinhas];
-
-if (modoOrdem === "alfabetica"){
-lista.sort((a,b)=>{
-let nomeA = a.nome || "";
-let nomeB = b.nome || "";
-return nomeA.localeCompare(nomeB, 'pt-BR');
-});
-}
-
 let col=figurinhas.filter(f=>f.qtd>0).length;
 let rep=figurinhas.reduce((a,f)=>a+Math.max(0,f.qtd-1),0);
 let falt=figurinhas.length-col;
@@ -224,7 +209,7 @@ colEl.innerText=col;
 faltEl.innerText=falt;
 repEl.innerText=rep;
 
-progEl.innerText = ${prog}% (${col}/${figurinhas.length});
+progEl.innerText = `${prog}% (${col}/${figurinhas.length})`;
 
 if(prog < 40){
 progEl.style.color = "#ef4444";
@@ -255,7 +240,7 @@ d.className="card";
 if(f.qtd==1)d.classList.add("done");
 if(f.qtd>=2)d.classList.add("repeat");
 
-d.innerHTML = <div>${f.id}</div><div style="font-size:10px;opacity:0.7">${f.qtd>0?"✔":"—"}</div>;
+d.innerHTML = `<div>${f.id}</div><div style="font-size:10px;opacity:0.7">${f.qtd>0?"✔":"—"}</div>`;
 
 if(f.qtd>1){
 let repb=document.createElement("div");
@@ -344,7 +329,7 @@ let total = figurinhas.length;
 let col = figurinhas.filter(f=>f.qtd>0).length;
 let prog = total ? Math.round((col/total)*100) : 0;
 
-homeProg.innerText = ${prog}% completo (${col}/${total});
+homeProg.innerText = `${prog}% completo (${col}/${total})`;
 
 let bar=document.getElementById("bar");
 if(bar){
