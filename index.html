@@ -47,7 +47,14 @@ justify-content:center;
   <button onclick="novoAlbum()" style="background:#ef4444">Novo Álbum</button>  
 </div>  <div id="app" style="display:none;">  <h1>Álbum Copa 2026</h1>  
 <div class="topBar"> 
-  <div style="display:flex;gap:8px;margin-bottom:15px;">
+  <button onclick="filtrar('todas')">Todas</button>  
+  <button onclick="filtrar('faltando')">Faltando</button>  
+  <button onclick="filtrar('coletadas')">Coletadas</button>  
+  <button onclick="filtrar('repetidas')">Repetidas</button>  
+</div>  
+ </div>
+
+<div style="display:flex;gap:8px;margin-bottom:15px;">
 
 <input 
 id="pesquisa"
@@ -65,12 +72,9 @@ font-size:16px;
 
 <button onclick="render()">🔍</button>
 
-  </div>
-  <button onclick="filtrar('todas')">Todas</button>  
-  <button onclick="filtrar('faltando')">Faltando</button>  
-  <button onclick="filtrar('coletadas')">Coletadas</button>  
-  <button onclick="filtrar('repetidas')">Repetidas</button>  
-</div>  
+</div>
+
+<div class="flash" id="flash"></div>   
 <div class="flash" id="flash"></div>  <div class="stats">  
 <div><b id="col">0</b><br>Coletadas</div>  
 <div><b id="falt">0</b><br>Faltando</div>  
