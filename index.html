@@ -46,7 +46,26 @@ justify-content:center;
   <button onclick="continuar()">Continuar</button>  
   <button onclick="novoAlbum()" style="background:#ef4444">Novo Álbum</button>  
 </div>  <div id="app" style="display:none;">  <h1>Álbum Copa 2026</h1>  
-<div class="topBar">  
+<div class="topBar"> 
+  <div style="display:flex;gap:8px;margin-bottom:15px;">
+
+<input 
+id="pesquisa"
+type="text"
+placeholder="Pesquisar país..."
+oninput="render()"
+style="
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+font-size:16px;
+"
+>
+
+<button onclick="render()">🔍</button>
+
+  </div>
   <button onclick="filtrar('todas')">Todas</button>  
   <button onclick="filtrar('faltando')">Faltando</button>  
   <button onclick="filtrar('coletadas')">Coletadas</button>  
@@ -184,7 +203,12 @@ sec.innerHTML="<h2>"+g.grupo+"</h2>";
 g.times.forEach(t=>{
 sec.innerHTML += "<h3>"+t[1]+"</h3><div class='grid' id='"+t[0]+"'></div>";
 for(let i=1;i<=20;i++){
-figurinhas.push({id:t[0]+i,grupo:t[0],qtd:0});
+figurinhas.push({
+id:t[0]+i,
+grupo:t[0],
+nome:t[2],
+qtd:0
+});
 }
 });
 gruposDiv.appendChild(sec);
@@ -231,6 +255,13 @@ msgProg.innerText = "Quase completo 😈";
 msgProg.innerText = "ÁLBUM COMPLETO 🏆";
 document.body.style.background = "#065f46";
 }
+ let textoPesquisa = document.getElementById("pesquisa")?.value.toLowerCase() || "";
+
+if(textoPesquisa){
+lista = lista.filter(f =>
+(f.nome || "").toLowerCase().includes(textoPesquisa)
+);
+} 
 lista.forEach(f=>{
 if(filtroAtual === "faltando" && f.qtd > 0) return;
 if(filtroAtual === "coletadas" && f.qtd === 0) return;
