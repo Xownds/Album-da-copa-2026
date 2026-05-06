@@ -262,6 +262,9 @@ lista = lista.filter(f =>
 (f.nome || "").toLowerCase().includes(textoPesquisa)
 );
 } 
+document.querySelectorAll(".section").forEach(sec=>{
+sec.style.display = textoPesquisa ? "none" : "block";
+});
 lista.forEach(f=>{
 if(filtroAtual === "faltando" && f.qtd > 0) return;
 if(filtroAtual === "coletadas" && f.qtd === 0) return;
@@ -303,6 +306,9 @@ openModal(f);
 
 document.getElementById(f.grupo).appendChild(d);
 });
+}
+if(textoPesquisa){
+document.getElementById(f.grupo).parentElement.style.display = "block";
 }
 
 function openModal(f){
