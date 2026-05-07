@@ -257,11 +257,27 @@ document.body.style.background = "#065f46";
 }
  let textoPesquisa = document.getElementById("pesquisa")?.value.toLowerCase() || "";
 
+function normalizar(txt){
+return (txt || "")
+.toLowerCase()
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g, "");
+}
+
 if(textoPesquisa){
-lista = lista.filter(f =>
-(f.nome || "").toLowerCase().includes(textoPesquisa)
-);
-} 
+
+let busca = normalizar(textoPesquisa);
+
+lista = lista.filter(f => {
+
+let nome = normalizar(f.nome);
+let sigla = normalizar(f.grupo);
+
+return nome.includes(busca) || sigla.includes(busca);
+
+});
+
+}
 document.querySelectorAll(".section").forEach(sec=>{
 sec.style.display = textoPesquisa ? "none" : "block";
 });
